@@ -2,7 +2,7 @@
 
 namespace DoggyFoody.Contracts.Database.Models
 {
-    public class RateEntity : BaseEntity
+    public class Rate : BaseEntity
     {
         public int Score { get; set; }
     }

@@ -2,7 +2,7 @@
 
 namespace DoggyFoody.Contracts.Database.Models
 {
-    public class AdvertisementEntity : BaseEntity
+    public class Advertisement : BaseEntity
     {
         public string Title { get; set; }
         public string Content { get; set; }

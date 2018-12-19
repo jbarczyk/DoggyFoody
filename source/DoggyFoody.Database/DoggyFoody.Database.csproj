@@ -40,7 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DoggyFoodyDatabaseContextDesignTimeFactory.cs" />
+    <Compile Include="DoggyFoodyDatabaseContext.Builder.cs" />
+    <Compile Include="DoggyFoodyDatabaseContext.cs" />
+    <Compile Include="Migrations\20181219212241_Initial_Migration.cs" />
+    <Compile Include="Migrations\20181219212241_Initial_Migration.designer.cs">
+      <DependentUpon>20181219212241_Initial_Migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\DoggyFoodyDatabaseContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DoggyFoody.Contracts.Database\DoggyFoody.Contracts.Database.csproj">
+      <Project>{c672596f-dc2e-4b6a-bc5b-8c42843c1b05}</Project>
+      <Name>DoggyFoody.Contracts.Database</Name>
+    </ProjectReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
