@@ -18,5 +18,6 @@ namespace DoggyFoody.Contracts.Database.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Column> Columns { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
+        public string Description { get; set; }
     }
 }

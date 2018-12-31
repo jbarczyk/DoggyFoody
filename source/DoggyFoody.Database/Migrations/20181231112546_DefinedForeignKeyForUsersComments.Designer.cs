@@ -4,14 +4,16 @@ using DoggyFoody.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DoggyFoody.Database.Migrations
 {
     [DbContext(typeof(DoggyFoodyDatabaseContext))]
-    partial class DoggyFoodyDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20181231112546_DefinedForeignKeyForUsersComments")]
+    partial class DefinedForeignKeyForUsersComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,8 +110,6 @@ namespace DoggyFoody.Database.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description");
 
                     b.Property<string>("IngredientsInternal")
                         .HasColumnName("Ingredients");

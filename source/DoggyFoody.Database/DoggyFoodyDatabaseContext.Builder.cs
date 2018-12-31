@@ -71,6 +71,11 @@ namespace DoggyFoody.Database
                 .HasMany<Column>(x => x.Columns)
                 .WithOne()
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<User>()
+                .HasMany<Comment>()
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

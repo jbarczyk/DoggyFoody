@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9F57C518-A74E-4C30-A9A7-06EB0E319C41}</ProjectGuid>
+    <ProjectGuid>{7A3B27B0-07F2-4CE4-BD76-A1AA3C1CA6BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DoggyFoody.Database</RootNamespace>
-    <AssemblyName>DoggyFoody.Database</AssemblyName>
+    <RootNamespace>DoggyFoody.Services</RootNamespace>
+    <AssemblyName>DoggyFoody.Services</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,33 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoggyFoodyDatabaseContextDesignTimeFactory.cs" />
-    <Compile Include="DoggyFoodyDatabaseContext.Builder.cs" />
-    <Compile Include="DoggyFoodyDatabaseContext.cs" />
-    <Compile Include="Migrations\20181219212241_Initial_Migration.cs" />
-    <Compile Include="Migrations\20181219212241_Initial_Migration.designer.cs">
-      <DependentUpon>20181219212241_Initial_Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20181231112546_DefinedForeignKeyForUsersComments.cs" />
-    <Compile Include="Migrations\20181231112546_DefinedForeignKeyForUsersComments.designer.cs">
-      <DependentUpon>20181231112546_DefinedForeignKeyForUsersComments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20181231112918_AddColumnDescriptionForProduct.cs" />
-    <Compile Include="Migrations\20181231112918_AddColumnDescriptionForProduct.designer.cs">
-      <DependentUpon>20181231112918_AddColumnDescriptionForProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DoggyFoodyDatabaseContextModelSnapshot.cs" />
+    <Compile Include="Interfaces\IManufacturerService.cs" />
+    <Compile Include="Interfaces\IProductService.cs" />
+    <Compile Include="ManufacturerService.cs" />
+    <Compile Include="Interfaces\IAdvertisementService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="AdvertisementService.cs" />
+    <Compile Include="ProductService.cs" />
+    <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DoggyFoody.Contracts.Database\DoggyFoody.Contracts.Database.csproj">
-      <Project>{c672596f-dc2e-4b6a-bc5b-8c42843c1b05}</Project>
+      <Project>{C672596F-DC2E-4B6A-BC5B-8C42843C1B05}</Project>
       <Name>DoggyFoody.Contracts.Database</Name>
     </ProjectReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
+    <ProjectReference Include="..\DoggyFoody.Database\DoggyFoody.Database.csproj">
+      <Project>{9f57c518-a74e-4c30-a9a7-06eb0e319c41}</Project>
+      <Name>DoggyFoody.Database</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
