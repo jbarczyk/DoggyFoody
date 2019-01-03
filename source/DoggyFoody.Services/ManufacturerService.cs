@@ -1,5 +1,6 @@
 ﻿using DoggyFoody.Contracts.Database.Models;
 using DoggyFoody.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,16 +22,21 @@ namespace DoggyFoody.Services
         public Manufacturer GetManufacturer(long id)
             => _dbContext.Manufacturers.FirstOrDefault(x => x.Id == id);
 
-        public Task AddManufacturer(Manufacturer manufacturer)
-            => _dbContext.AddAsync(manufacturer);
+        public async Task AddManufacturer(Manufacturer manufacturer)
+        {
+            await _dbContext.AddAsync(manufacturer);
+            await _dbContext.SaveChangesAsync();
+        }
 
-        public void DeleteManufacturer(long id)
+        public async Task DeleteManufacturer(long id)
         {
             var manufacturer = GetManufacturer(id);
             if (manufacturer != null)
             {
                 _dbContext.Remove<Manufacturer>(manufacturer);
             }
+
+            await _dbContext.SaveChangesAsync();
         }
 
         public IEnumerable<Product> GetManufacturerProducts(long id)
@@ -38,5 +44,29 @@ namespace DoggyFoody.Services
 
         public IEnumerable<Advertisement> GetManufacturerAdvertisements(long id)
             => GetManufacturer(id)?.Advertisements;
+
+        public async Task AddProductToManufacturer(long manufacturerId, Product product)
+        {
+            var manufacturer = GetManufacturer(manufacturerId) ?? throw new ArgumentException("Cannot find user");
+            if (manufacturer.Products == null)
+            {
+                manufacturer.Products = new List<Product>();
+            }
+
+            manufacturer.Products.Add(product);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddAdvertisement(long manufacturerId, Advertisement advertisement)
+        {
+            var manufacturer = GetManufacturer(manufacturerId) ?? throw new ArgumentException("Cannot find user");
+            if (manufacturer.Advertisements == null)
+            {
+                manufacturer.Advertisements = new List<Advertisement>();
+            }
+
+            manufacturer.Advertisements.Add(advertisement);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

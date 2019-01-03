@@ -42,6 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filter\FilterParams.cs" />
+    <Compile Include="Filter\FilterStrategies\IngredientsStrategy.cs" />
+    <Compile Include="Filter\FilterStrategies\ManufacturersStrategy.cs" />
+    <Compile Include="Filter\FilterStrategies\NameStrategy.cs" />
+    <Compile Include="Filter\FilterStrategies\DescriptionStrategy.cs" />
+    <Compile Include="Filter\Generic\FilterStrategy.cs" />
+    <Compile Include="Filter\Generic\QueryBuilder.cs" />
+    <Compile Include="Filter\Generic\QueryMutator.cs" />
+    <Compile Include="Filter\ProductFilter.cs" />
+    <Compile Include="Interfaces\IColumnService.cs" />
     <Compile Include="Interfaces\IManufacturerService.cs" />
     <Compile Include="Interfaces\IProductService.cs" />
     <Compile Include="ManufacturerService.cs" />
@@ -49,6 +59,7 @@
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="AdvertisementService.cs" />
     <Compile Include="ProductService.cs" />
+    <Compile Include="ColumnService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,5 +73,6 @@
       <Name>DoggyFoody.Database</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

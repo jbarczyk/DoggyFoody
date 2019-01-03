@@ -15,6 +15,7 @@ namespace DoggyFoody.Contracts.Database.Models
             set => Ingredients = value.DeserializeNullable<IDictionary<string, decimal>>();
         }
 
+        public long ManufacturerId { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Column> Columns { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }

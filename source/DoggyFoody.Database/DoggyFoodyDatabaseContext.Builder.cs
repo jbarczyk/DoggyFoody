@@ -32,6 +32,7 @@ namespace DoggyFoody.Database
             modelBuilder.Entity<Manufacturer>()
                 .HasMany<Product>(x => x.Products)
                 .WithOne()
+                .HasForeignKey(X => X.ManufacturerId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Manufacturer>()

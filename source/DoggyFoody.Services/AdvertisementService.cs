@@ -2,7 +2,6 @@
 using DoggyFoody.Database;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DoggyFoody.Services
 {
@@ -21,9 +20,6 @@ namespace DoggyFoody.Services
         public Advertisement GetAdvertisement(long id)
             => _dbContext.Advertisements.FirstOrDefault(x => x.Id == id);
 
-        public Task AddAdvertisement(Advertisement advertisement)
-            => _dbContext.AddAsync(advertisement);
-
         public void DeleteAdvertisement(long id)
         {
             var advertisement = GetAdvertisement(id);
@@ -32,5 +28,8 @@ namespace DoggyFoody.Services
                 _dbContext.Remove<Advertisement>(advertisement);
             }
         }
+
+        public IEnumerable<Advertisement> GetRandomAdvertisements(int count)
+            => GetAllAdvertisements().OrderBy(x => x.GetHashCode()).Take(count);
     }
 }

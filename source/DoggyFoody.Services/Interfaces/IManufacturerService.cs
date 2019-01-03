@@ -7,10 +7,12 @@ namespace DoggyFoody.Services
     public interface IManufacturerService
     {
         Task AddManufacturer(Manufacturer manufacturer);
-        void DeleteManufacturer(long id);
+        Task DeleteManufacturer(long id);
         IEnumerable<Manufacturer> GetAllManufacturers();
         Manufacturer GetManufacturer(long id);
         IEnumerable<Advertisement> GetManufacturerAdvertisements(long id);
         IEnumerable<Product> GetManufacturerProducts(long id);
+        Task AddProductToManufacturer(long manufacturerId, Product product);
+        Task AddAdvertisement(long manufacturerId, Advertisement advertisement);
     }
 }

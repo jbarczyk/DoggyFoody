@@ -1,6 +1,7 @@
 ﻿using DoggyFoody.Contracts.Database.Enums;
 using DoggyFoody.Contracts.Database.Models;
 using DoggyFoody.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,8 +26,11 @@ namespace DoggyFoody.Services
         public UserTypeEnum? GetUserRole(long id)
             => GetUser(id)?.UserType;
 
-        public Task AddUser(User newUser)
-            => _dbContext.Users.AddAsync(newUser);
+        public async Task AddUser(User newUser)
+        {
+            await _dbContext.Users.AddAsync(newUser);
+            await _dbContext.SaveChangesAsync();
+        }
 
         public IEnumerable<Column> GetUserColumns(long id)
             => GetUser(id)?.Columns;
@@ -34,13 +38,27 @@ namespace DoggyFoody.Services
         public User GetUser(string login, string password)
             => _dbContext.Users.FirstOrDefault(x => x.Login.Equals(login) && x.Password.Equals(password));
 
-        public void DeleteUser(long id)
+        public async Task DeleteUser(long id)
         {
             var user = GetUser(id);
             if (user != null)
             {
                 _dbContext.Remove<User>(user);
             }
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddColumnToUser(long userId, Column column)
+        {
+            var user = GetUser(userId) ?? throw new ArgumentException("Cannot find user");
+            if(user.Columns == null)
+            {
+                user.Columns = new List<Column>();
+            }
+
+            user.Columns.Add(column);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
