@@ -2,6 +2,7 @@
 using DoggyFoody.Contracts.Database.Models;
 using DoggyFoody.Database;
 using DoggyFoody.Services;
+using DoggyFoody.Services.Filter;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace DoggyFoody.TestingApp
 
             var context = new DoggyFoodyDatabaseContext(new DbContextOptionsBuilder<DoggyFoodyDatabaseContext>().Options);
             var userService = new UserService(context);
-            var productService = new ProductService(context, userService);
+            var productService = new ProductService(context, userService, new ProductFilter());
 
             var users = userService.GetAllUsers();
             productService.AddCommentToProduct(1, 1, new Comment

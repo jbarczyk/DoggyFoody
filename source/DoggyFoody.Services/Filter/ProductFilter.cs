@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DoggyFoody.Services.Filter
 {
-    public class ProductFilter
+    public class ProductFilter : IProductFilter
     {
         private QueryBuilder<Product, FilterParams> _queryBuilder = new QueryBuilder<Product, FilterParams>();
 

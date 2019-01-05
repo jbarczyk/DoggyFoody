@@ -50,6 +50,7 @@
     <Compile Include="Filter\Generic\FilterStrategy.cs" />
     <Compile Include="Filter\Generic\QueryBuilder.cs" />
     <Compile Include="Filter\Generic\QueryMutator.cs" />
+    <Compile Include="Filter\IProductFilter.cs" />
     <Compile Include="Filter\ProductFilter.cs" />
     <Compile Include="Interfaces\IColumnService.cs" />
     <Compile Include="Interfaces\IManufacturerService.cs" />

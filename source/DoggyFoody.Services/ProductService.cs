@@ -1,5 +1,6 @@
 ﻿using DoggyFoody.Contracts.Database.Models;
 using DoggyFoody.Database;
+using DoggyFoody.Services.Filter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,27 @@ namespace DoggyFoody.Services
     {
         private readonly DoggyFoodyDatabaseContext _dbContext;
         private readonly IUserService _userService;
+        private readonly IProductFilter _filter;
 
-        public ProductService(DoggyFoodyDatabaseContext dbContext, IUserService userService)
+        public ProductService(DoggyFoodyDatabaseContext dbContext, IUserService userService, IProductFilter productFilter)
         {
             _dbContext = dbContext;
             _userService = userService;
+            _filter = productFilter;
         }
 
         public IEnumerable<Product> GetAllProducts()
             => _dbContext.Products;
+
+        public IEnumerable<Product> GetProducts(FilterParams filterParams)
+        { 
+            if(filterParams == null)
+            {
+                throw new ArgumentException("Filter params shoudn't be null");
+            }
+
+            return _filter.FilterProducts(_dbContext.Products, filterParams);
+        }
 
         public Product GetProduct(long id)
             => _dbContext.Products.FirstOrDefault(x => x.Id == id);

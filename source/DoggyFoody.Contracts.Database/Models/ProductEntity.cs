@@ -20,5 +20,6 @@ namespace DoggyFoody.Contracts.Database.Models
         public virtual ICollection<Column> Columns { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
         public string Description { get; set; }
+        public string ImageAddress { get; set; }
     }
 }
