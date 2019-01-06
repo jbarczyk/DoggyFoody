@@ -11,10 +11,12 @@ namespace DoggyFoody.Services
     public class UserService : IUserService
     {
         private readonly DoggyFoodyDatabaseContext _dbContext;
+        private readonly IColumnService _columnService;
 
-        public UserService(DoggyFoodyDatabaseContext dbContext)
+        public UserService(DoggyFoodyDatabaseContext dbContext, IColumnService columnService)
         {
             _dbContext = dbContext;
+            _columnService = columnService;
         }
 
         public IEnumerable<User> GetAllUsers()
@@ -28,8 +30,12 @@ namespace DoggyFoody.Services
 
         public async Task AddUser(User newUser)
         {
-            await _dbContext.Users.AddAsync(newUser);
-            await _dbContext.SaveChangesAsync();
+            var user = GetUser(newUser.Login, newUser.Password);
+            if (user != null)
+            {
+                await _dbContext.Users.AddAsync(newUser);
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
         public IEnumerable<Column> GetUserColumns(long id)
@@ -52,13 +58,7 @@ namespace DoggyFoody.Services
         public async Task AddColumnToUser(long userId, Column column)
         {
             var user = GetUser(userId) ?? throw new ArgumentException("Cannot find user");
-            if(user.Columns == null)
-            {
-                user.Columns = new List<Column>();
-            }
-
-            user.Columns.Add(column);
-            await _dbContext.SaveChangesAsync();
+            await _columnService.AddColumn(column, userId, productId: null);
         }
     }
 }

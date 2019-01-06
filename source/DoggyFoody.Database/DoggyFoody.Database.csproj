@@ -64,6 +64,10 @@
     <Compile Include="Migrations\20190105165129_AddedPhotosToDb.designer.cs">
       <DependentUpon>20190105165129_AddedPhotosToDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190106185459_AddedForeignKeyForProductsColumns.cs" />
+    <Compile Include="Migrations\20190106185459_AddedForeignKeyForProductsColumns.designer.cs">
+      <DependentUpon>20190106185459_AddedForeignKeyForProductsColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DoggyFoodyDatabaseContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,9 +76,9 @@
       <Project>{c672596f-dc2e-4b6a-bc5b-8c42843c1b05}</Project>
       <Name>DoggyFoody.Contracts.Database</Name>
     </ProjectReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

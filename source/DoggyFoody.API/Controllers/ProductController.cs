@@ -1,5 +1,6 @@
 ﻿using DoggyFoody.Contracts.Database.Models;
 using DoggyFoody.Services;
+using DoggyFoody.Services.Filter;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -10,24 +11,24 @@ using System.Web.Http.Description;
 
 namespace DoggyFoody.API.Controllers
 {
-    [RoutePrefix("api/users")]
-    public class UsersController : ApiController
+    [RoutePrefix("api/products")]
+    public class ProductController : ApiController
     {
-        private readonly IUserService _userService;
+        private readonly IProductService _productService;
 
-        public UsersController(IUserService userService)
+        public ProductController(IProductService productService)
         {
-            _userService = userService;
+            _productService = productService;
         }
 
         [Route("")]
         [HttpGet]
-        [ResponseType(typeof(IEnumerable<User>))]
+        [ResponseType(typeof(IEnumerable<Product>))]
         public HttpResponseMessage GetAll(HttpRequestMessage request)
         {
             try
             {
-                return request.CreateResponse(HttpStatusCode.OK, _userService.GetAllUsers());
+                return request.CreateResponse(HttpStatusCode.OK, _productService.GetAllProducts());
             }
             catch (Exception ex)
             {
@@ -37,15 +38,15 @@ namespace DoggyFoody.API.Controllers
 
         [Route("")]
         [HttpGet]
-        [ResponseType(typeof(User))]
+        [ResponseType(typeof(Product))]
         public HttpResponseMessage Get(HttpRequestMessage request, long id)
         {
             try
             {
-                var user = _userService.GetUser(id);
-                if (user != null)
+                var product = _productService.GetProduct(id);
+                if (product != null)
                 {
-                    return request.CreateResponse(HttpStatusCode.OK, user);
+                    return request.CreateResponse(HttpStatusCode.OK, product);
                 }
 
                 return request.CreateErrorResponse(HttpStatusCode.NotFound, "User not found");
@@ -56,35 +57,15 @@ namespace DoggyFoody.API.Controllers
             }
         }
 
-        [Route("login")]
-        [HttpGet]
-        [ResponseType(typeof(User))]
-        public HttpResponseMessage Login(HttpRequestMessage request, string username, string password)
-        {
-            try
-            {
-                var user = _userService.GetUser(username, password);
-                if (user != null)
-                {
-                    return request.CreateResponse(HttpStatusCode.OK, user);
-                }
-
-                return request.CreateErrorResponse(HttpStatusCode.NotFound, "User not found");
-            }
-            catch (Exception ex)
-            {
-                return request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-            }
-        }
-
-        [Route("register")]
+        [Route("filter")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Register(HttpRequestMessage request, [FromBody]User user)
+        [ResponseType(typeof(IEnumerable<Product>))]
+        public HttpResponseMessage Filter(HttpRequestMessage request, [FromBody]FilterParams filterParams)
         {
             try
             {
-                await _userService.AddUser(user);
-                return request.CreateResponse(HttpStatusCode.OK);
+                var products = _productService.GetProducts(filterParams);
+                return request.CreateResponse(HttpStatusCode.OK, products);
             }
             catch(Exception ex)
             {
@@ -94,11 +75,41 @@ namespace DoggyFoody.API.Controllers
 
         [Route("addColumn")]
         [HttpPost]
-        public async Task<HttpResponseMessage> AddColumnToUser(HttpRequestMessage request, long id, [FromBody]Column column)
+        public async Task<HttpResponseMessage> AddColumn(HttpRequestMessage request, long productId, long userId, [FromBody]Column column)
         {
             try
             {
-                await _userService.AddColumnToUser(id, column);
+                await _productService.AddColumnToProduct(userId, productId, column);
+                return request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [Route("addRate")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> AddRate(HttpRequestMessage request, long productId, long userId, [FromBody]Rate rate)
+        {
+            try
+            {
+                await _productService.AddRateToProduct(userId, productId, rate);
+                return request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [Route("addComment")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> AddComment(HttpRequestMessage request, long productId, long userId, [FromBody]Comment comment)
+        {
+            try
+            {
+                await _productService.AddCommentToProduct(userId, productId, comment);
                 return request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
@@ -113,7 +124,7 @@ namespace DoggyFoody.API.Controllers
         {
             try
             {
-                await _userService.DeleteUser(id);
+                await _productService.DeleteProduct(id);
                 return request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)

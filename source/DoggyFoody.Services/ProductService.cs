@@ -13,12 +13,14 @@ namespace DoggyFoody.Services
         private readonly DoggyFoodyDatabaseContext _dbContext;
         private readonly IUserService _userService;
         private readonly IProductFilter _filter;
+        private readonly IColumnService _columnService;
 
-        public ProductService(DoggyFoodyDatabaseContext dbContext, IUserService userService, IProductFilter productFilter)
+        public ProductService(DoggyFoodyDatabaseContext dbContext, IUserService userService, IProductFilter productFilter, IColumnService columnService)
         {
             _dbContext = dbContext;
             _userService = userService;
             _filter = productFilter;
+            _columnService = columnService;
         }
 
         public IEnumerable<Product> GetAllProducts()
@@ -80,6 +82,13 @@ namespace DoggyFoody.Services
 
             product.Rates.Add(rate);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddColumnToProduct(long userID, long productId, Column column)
+        {
+            var user = _userService.GetUser(userID) ?? throw new ArgumentException("Cannot find user");
+            var product = GetProduct(productId) ?? throw new ArgumentException("Cannot find product");
+            await _columnService.AddColumn(column, userID, productId);
         }
     }
 }

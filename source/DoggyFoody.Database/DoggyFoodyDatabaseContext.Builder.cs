@@ -10,11 +10,19 @@ namespace DoggyFoody.Database
             : base(options)
         { }
 
+        public DoggyFoodyDatabaseContext()
+            :base(new DbContextOptions<DoggyFoodyDatabaseContext>())
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             if (!builder.IsConfigured)
             {
-                builder.UseSqlServer(@"Server=localhost\sqlexpress;Database=DoggyFoodyDb;Trusted_Connection=True;");
+                builder.UseSqlServer(@"Server=tcp:doggyfoodyserver.database.windows.net,1433;Initial Catalog=DoggyFoodyDb;
+                                       Persist Security Info=False;User ID=jbarczyk;Password=DoggyFoody1997;
+                                       MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 
@@ -56,6 +64,7 @@ namespace DoggyFoody.Database
             modelBuilder.Entity<Product>()
                 .HasMany<Column>(x => x.Columns)
                 .WithOne()
+                .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Product>()
@@ -71,6 +80,7 @@ namespace DoggyFoody.Database
             modelBuilder.Entity<User>()
                 .HasMany<Column>(x => x.Columns)
                 .WithOne()
+                .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<User>()

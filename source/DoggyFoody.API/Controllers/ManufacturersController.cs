@@ -10,24 +10,24 @@ using System.Web.Http.Description;
 
 namespace DoggyFoody.API.Controllers
 {
-    [RoutePrefix("api/users")]
-    public class UsersController : ApiController
+    [RoutePrefix("api/manufacturers")]
+    public class ManufacturersController : ApiController
     {
-        private readonly IUserService _userService;
+        private readonly IManufacturerService _manufacturerService;
 
-        public UsersController(IUserService userService)
+        public ManufacturersController(IManufacturerService manufacturerService)
         {
-            _userService = userService;
+            _manufacturerService = manufacturerService;
         }
 
         [Route("")]
         [HttpGet]
-        [ResponseType(typeof(IEnumerable<User>))]
+        [ResponseType(typeof(IEnumerable<Manufacturer>))]
         public HttpResponseMessage GetAll(HttpRequestMessage request)
         {
             try
             {
-                return request.CreateResponse(HttpStatusCode.OK, _userService.GetAllUsers());
+                return request.CreateResponse(HttpStatusCode.OK, _manufacturerService.GetAllManufacturers());
             }
             catch (Exception ex)
             {
@@ -37,12 +37,12 @@ namespace DoggyFoody.API.Controllers
 
         [Route("")]
         [HttpGet]
-        [ResponseType(typeof(User))]
+        [ResponseType(typeof(Manufacturer))]
         public HttpResponseMessage Get(HttpRequestMessage request, long id)
         {
             try
             {
-                var user = _userService.GetUser(id);
+                var user = _manufacturerService.GetManufacturer(id);
                 if (user != null)
                 {
                     return request.CreateResponse(HttpStatusCode.OK, user);
@@ -56,34 +56,13 @@ namespace DoggyFoody.API.Controllers
             }
         }
 
-        [Route("login")]
-        [HttpGet]
-        [ResponseType(typeof(User))]
-        public HttpResponseMessage Login(HttpRequestMessage request, string username, string password)
-        {
-            try
-            {
-                var user = _userService.GetUser(username, password);
-                if (user != null)
-                {
-                    return request.CreateResponse(HttpStatusCode.OK, user);
-                }
-
-                return request.CreateErrorResponse(HttpStatusCode.NotFound, "User not found");
-            }
-            catch (Exception ex)
-            {
-                return request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
-            }
-        }
-
-        [Route("register")]
+        [Route("add")]
         [HttpPost]
-        public async Task<HttpResponseMessage> Register(HttpRequestMessage request, [FromBody]User user)
+        public async Task<HttpResponseMessage> Post(HttpRequestMessage request, [FromBody]Manufacturer manufacturer)
         {
             try
             {
-                await _userService.AddUser(user);
+                await _manufacturerService.AddManufacturer(manufacturer);
                 return request.CreateResponse(HttpStatusCode.OK);
             }
             catch(Exception ex)
@@ -92,13 +71,28 @@ namespace DoggyFoody.API.Controllers
             }
         }
 
-        [Route("addColumn")]
+        [Route("addAdvertisement")]
         [HttpPost]
-        public async Task<HttpResponseMessage> AddColumnToUser(HttpRequestMessage request, long id, [FromBody]Column column)
+        public async Task<HttpResponseMessage> AddAdvertisement(HttpRequestMessage request, long id, [FromBody]Advertisement advertisement)
         {
             try
             {
-                await _userService.AddColumnToUser(id, column);
+                await _manufacturerService.AddAdvertisement(id, advertisement);
+                return request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [Route("addProduct")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> AddProduct(HttpRequestMessage request, long id, [FromBody]Product product)
+        {
+            try
+            {
+                await _manufacturerService.AddProductToManufacturer(id, product);
                 return request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
@@ -113,7 +107,7 @@ namespace DoggyFoody.API.Controllers
         {
             try
             {
-                await _userService.DeleteUser(id);
+                await _manufacturerService.DeleteManufacturer(id);
                 return request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)

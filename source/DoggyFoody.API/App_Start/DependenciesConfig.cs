@@ -33,7 +33,6 @@ namespace DoggyFoody.API
             builder.RegisterType<AdvertisementService>().As<IAdvertisementService>();
             builder.RegisterType<ColumnService>().As<IColumnService>();
             builder.RegisterType<ManufacturerService>().As<IManufacturerService>();
-
         }
     }
 }

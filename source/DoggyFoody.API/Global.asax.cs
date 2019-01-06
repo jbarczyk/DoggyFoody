@@ -1,4 +1,10 @@
-﻿using System.Web.Http;
+﻿using Autofac;
+using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
+using DoggyFoody.Database;
+using DoggyFoody.Services;
+using System.Reflection;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
