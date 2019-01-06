@@ -3,6 +3,7 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using DoggyFoody.Database;
 using DoggyFoody.Services;
+using DoggyFoody.Services.Filter;
 using System.Reflection;
 using System.Web.Http;
 
@@ -33,6 +34,7 @@ namespace DoggyFoody.API
             builder.RegisterType<AdvertisementService>().As<IAdvertisementService>();
             builder.RegisterType<ColumnService>().As<IColumnService>();
             builder.RegisterType<ManufacturerService>().As<IManufacturerService>();
+            builder.RegisterType<ProductFilter>().As<IProductFilter>();
         }
     }
 }
