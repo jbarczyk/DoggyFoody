@@ -6,11 +6,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace DoggyFoody.API.Controllers
 {
     [RoutePrefix("api/manufacturers")]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ManufacturersController : ApiController
     {
         private readonly IManufacturerService _manufacturerService;
