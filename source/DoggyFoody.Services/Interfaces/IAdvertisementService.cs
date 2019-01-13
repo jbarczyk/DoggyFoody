@@ -6,7 +6,7 @@ namespace DoggyFoody.Services
 {
     public interface IAdvertisementService
     {
-        void DeleteAdvertisement(long id);
+        Task DeleteAdvertisement(long id);
         Advertisement GetAdvertisement(long id);
         IEnumerable<Advertisement> GetAllAdvertisements();
         IEnumerable<Advertisement> GetRandomAdvertisements(int count);
