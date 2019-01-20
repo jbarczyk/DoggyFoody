@@ -68,6 +68,10 @@
     <Compile Include="Migrations\20190106185459_AddedForeignKeyForProductsColumns.designer.cs">
       <DependentUpon>20190106185459_AddedForeignKeyForProductsColumns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20190120170637_AddedFoodTypeToProducts.cs" />
+    <Compile Include="Migrations\20190120170637_AddedFoodTypeToProducts.designer.cs">
+      <DependentUpon>20190120170637_AddedFoodTypeToProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DoggyFoodyDatabaseContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

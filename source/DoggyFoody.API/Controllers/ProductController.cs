@@ -1,4 +1,5 @@
-﻿using DoggyFoody.Contracts.Database.Models;
+﻿using DoggyFoody.Contracts.Database.Enums;
+using DoggyFoody.Contracts.Database.Models;
 using DoggyFoody.Services;
 using DoggyFoody.Services.Filter;
 using System;
@@ -31,6 +32,26 @@ namespace DoggyFoody.API.Controllers
             try
             {
                 return request.CreateResponse(HttpStatusCode.OK, _productService.GetAllProducts());
+            }
+            catch (Exception ex)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [Route("foodType")]
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Product>))]
+        public HttpResponseMessage GetAll(HttpRequestMessage request, string foodType)
+        {
+            try
+            {
+                if (Enum.TryParse<FoodTypeEnum>(foodType, true, out var result))
+                {
+                    return request.CreateResponse(HttpStatusCode.OK, _productService.GetProductsOfType(result));
+                }
+
+                return request.CreateErrorResponse(HttpStatusCode.BadRequest, $"{foodType} is not recognized food type.");
             }
             catch (Exception ex)
             {

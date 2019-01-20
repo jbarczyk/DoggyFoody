@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DoggyFoody.Contracts.Database.Enums;
 using DoggyFoody.Contracts.Database.Models;
 using DoggyFoody.Services.Filter;
 
@@ -17,5 +18,6 @@ namespace DoggyFoody.Services
         IEnumerable<Column> GetProductColumns(long id);
         IEnumerable<Comment> GetProductComments(long id);
         IEnumerable<Rate> GetProductRates(long id);
+        IEnumerable<Product> GetProductsOfType(FoodTypeEnum foodType);
     }
 }

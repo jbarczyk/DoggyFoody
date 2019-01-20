@@ -17,7 +17,8 @@ namespace DoggyFoody.Services.Filter
                 new QueryMutator<Product, FilterParams>(new DescriptionStrategy()),
                 new QueryMutator<Product, FilterParams>(new IngredientsStrategy()),
                 new QueryMutator<Product, FilterParams>(new ManufacturersStrategy()),
-                new QueryMutator<Product, FilterParams>(new NameStrategy())
+                new QueryMutator<Product, FilterParams>(new NameStrategy()),
+                new QueryMutator<Product, FilterParams>(new FoodTypeStrategy())
             };
         }
 

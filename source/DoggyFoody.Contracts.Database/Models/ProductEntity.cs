@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DoggyFoody.Contracts.Database.Base;
+using DoggyFoody.Contracts.Database.Enums;
 using DoggyFoody.Contracts.Database.Utils;
 
 namespace DoggyFoody.Contracts.Database.Models
@@ -7,6 +8,7 @@ namespace DoggyFoody.Contracts.Database.Models
     public class Product : BaseEntity
     {
         public string Name { get; set; }
+        public FoodTypeEnum FoodType { get; set; }
 
         public IDictionary<string, decimal> Ingredients { get; set; }
         public string IngredientsInternal

@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Filter\FilterParams.cs" />
+    <Compile Include="Filter\FilterStrategies\FoodTypeStrategy.cs" />
     <Compile Include="Filter\FilterStrategies\IngredientsStrategy.cs" />
     <Compile Include="Filter\FilterStrategies\ManufacturersStrategy.cs" />
     <Compile Include="Filter\FilterStrategies\NameStrategy.cs" />

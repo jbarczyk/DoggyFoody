@@ -1,6 +1,8 @@
-﻿using DoggyFoody.Contracts.Database.Models;
+﻿using DoggyFoody.Contracts.Database.Enums;
+using DoggyFoody.Contracts.Database.Models;
 using DoggyFoody.Database;
 using DoggyFoody.Services.Filter;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +29,8 @@ namespace DoggyFoody.Services
             => _dbContext.Products;
 
         public IEnumerable<Product> GetProducts(FilterParams filterParams)
-        { 
-            if(filterParams == null)
+        {
+            if (filterParams == null)
             {
                 throw new ArgumentException("Filter params shoudn't be null");
             }
@@ -37,7 +39,13 @@ namespace DoggyFoody.Services
         }
 
         public Product GetProduct(long id)
-            => _dbContext.Products.FirstOrDefault(x => x.Id == id);
+        {
+            return _dbContext.Products
+                .Include(x => x.Columns)
+                .Include(x => x.Comments)
+                .Include(x => x.Rates)
+                .FirstOrDefault(x => x.Id == id);
+        }
 
         public async Task DeleteProduct(long id)
         {
@@ -89,6 +97,16 @@ namespace DoggyFoody.Services
             var user = _userService.GetUser(userID) ?? throw new ArgumentException("Cannot find user");
             var product = GetProduct(productId) ?? throw new ArgumentException("Cannot find product");
             await _columnService.AddColumn(column, userID, productId);
+        }
+
+        public IEnumerable<Product> GetProductsOfType(FoodTypeEnum foodType)
+        {
+            var filterParams = new FilterParams
+            {
+                FoodType = foodType
+            };
+
+            return _filter.FilterProducts(_dbContext.Products, filterParams);
         }
     }
 }

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\BaseEntity.cs" />
+    <Compile Include="Enums\FoodTypeEnum.cs" />
     <Compile Include="Enums\UserTypeEnum.cs" />
     <Compile Include="Models\AdvertisementEntity.cs" />
     <Compile Include="Models\ColumnEntity.cs" />
