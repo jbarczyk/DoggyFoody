@@ -66,13 +66,6 @@ namespace DoggyFoody.Database
                 .WithOne()
                 .HasForeignKey(x => x.ProductId)
                 .OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<Product>()
-                .Ignore(x => x.Ingredients);
-
-            modelBuilder.Entity<Product>()
-                .Property(x => x.IngredientsInternal)
-                .HasColumnName("Ingredients");
         }
 
         private void ConfigureUsers(ModelBuilder modelBuilder)

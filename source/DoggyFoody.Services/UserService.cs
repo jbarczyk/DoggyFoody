@@ -31,7 +31,7 @@ namespace DoggyFoody.Services
         public async Task AddUser(User newUser)
         {
             var user = GetUser(newUser.Login, newUser.Password);
-            if (user != null)
+            if (user == null)
             {
                 await _dbContext.Users.AddAsync(newUser);
                 await _dbContext.SaveChangesAsync();

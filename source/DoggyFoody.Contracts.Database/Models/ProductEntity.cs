@@ -10,13 +10,7 @@ namespace DoggyFoody.Contracts.Database.Models
         public string Name { get; set; }
         public FoodTypeEnum FoodType { get; set; }
 
-        public IDictionary<string, decimal> Ingredients { get; set; }
-        public string IngredientsInternal
-        {
-            get => Ingredients.SerializeNullable();
-            set => Ingredients = value.DeserializeNullable<IDictionary<string, decimal>>();
-        }
-
+        public string Ingredients { get; set; }
         public long ManufacturerId { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Column> Columns { get; set; }

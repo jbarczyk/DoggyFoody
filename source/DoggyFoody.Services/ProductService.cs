@@ -26,7 +26,7 @@ namespace DoggyFoody.Services
         }
 
         public IEnumerable<Product> GetAllProducts()
-            => _dbContext.Products;
+            => _dbContext.Products.Include(x => x.Rates);
 
         public IEnumerable<Product> GetProducts(FilterParams filterParams)
         {
@@ -35,7 +35,7 @@ namespace DoggyFoody.Services
                 throw new ArgumentException("Filter params shoudn't be null");
             }
 
-            return _filter.FilterProducts(_dbContext.Products, filterParams);
+            return _filter.FilterProducts(_dbContext.Products.Include(x => x.Rates), filterParams);
         }
 
         public Product GetProduct(long id)
@@ -106,7 +106,7 @@ namespace DoggyFoody.Services
                 FoodType = foodType
             };
 
-            return _filter.FilterProducts(_dbContext.Products, filterParams);
+            return _filter.FilterProducts(_dbContext.Products.Include(x => x.Rates), filterParams);
         }
     }
 }

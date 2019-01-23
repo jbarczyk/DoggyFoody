@@ -10,8 +10,9 @@ namespace DoggyFoody.Services.Filter.FilterStrategies
         {
             Condition = filterParams => filterParams.ContainsIngredients?.Any() ?? false;
 
-            Mutator =  (query, filterParams) 
-                => query.Where(x => x.Ingredients.All(indegrient => filterParams.ContainsIngredients.Contains(indegrient.Key)));
+            Mutator = (query, filterParams)
+               => query.Where(x => filterParams.ContainsIngredients.All(
+                   indegrient => x.Ingredients.Contains(indegrient)));
         }
     }
 }
