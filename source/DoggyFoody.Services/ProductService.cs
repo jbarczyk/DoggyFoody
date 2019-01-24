@@ -108,5 +108,15 @@ namespace DoggyFoody.Services
 
             return _filter.FilterProducts(_dbContext.Products.Include(x => x.Rates), filterParams);
         }
+
+        public async Task DeleteComment(long commentId)
+        {
+            var comment = _dbContext.Comments.FirstOrDefault(x => x.Id == commentId);
+            if(comment != null)
+            {
+                _dbContext.Comments.Remove(comment);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }

@@ -141,6 +141,21 @@ namespace DoggyFoody.API.Controllers
             }
         }
 
+        [Route("deleteComment")]
+        [HttpDelete]
+        public async Task<HttpResponseMessage> AddComment(HttpRequestMessage request, long id)
+        {
+            try
+            {
+                await _productService.DeleteComment(id);
+                return request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
         [Route("delete")]
         [HttpDelete]
         public async Task<HttpResponseMessage> Delete(HttpRequestMessage request, long id)

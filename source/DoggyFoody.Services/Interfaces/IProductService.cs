@@ -19,5 +19,6 @@ namespace DoggyFoody.Services
         IEnumerable<Comment> GetProductComments(long id);
         IEnumerable<Rate> GetProductRates(long id);
         IEnumerable<Product> GetProductsOfType(FoodTypeEnum foodType);
+        Task DeleteComment(long commentId);
     }
 }
